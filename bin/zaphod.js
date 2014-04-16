@@ -18,9 +18,10 @@ var establishConnection = function(ws) {
 		type: 'connect',
 		connection: {
 			server: 'irc.freenode.net',
-			nick: 'zaphod',
-			channels: ['#nplol', '#pekkabot']
-		}
+			nick: 'nplol-zaphod',
+			channels: ['#pekkabot']
+		},
+		raw: true
 	}));
 }
 
@@ -75,14 +76,13 @@ ws.on('message', function(data) {
 			}));
 		}
 		else if (message.from == 'kengr') {
-			if (message.payload.indexOf('!piggy') == 0) {
+			if (message.payload.indexOf('!nick') == 0) {
 				var args = message.payload.split(' ')
 				if (args.length > 1) {
 					ws.send(JSON.stringify({
 						key: message.key,
-						type: 'msg',
-						to: message.from,
-						payload: message.from + ' want me to say: ' + args[1]
+						type: 'raw',
+						cmd: ['NICK', args[1]]
 					}))
 				}
 			}
