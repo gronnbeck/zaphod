@@ -30,7 +30,6 @@ ws.on('open', function() {
 });
 
 ws.on('message', function(data) {
-	console.log(data);
 	var message = JSON.parse(data);
 
 	if (message.success == false && message.type == 'disconnected') {
