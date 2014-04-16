@@ -15,7 +15,8 @@
 		"ws": "0.4.31",
 		"underscore": "1.5.2",
 		"q": "2.0.0",
-		"node-getopt": "latest"
+		"node-getopt": "latest",
+		"js-yaml": "latest"
 	},
 	"devDependencies": {
 		"supervisor": "latest"

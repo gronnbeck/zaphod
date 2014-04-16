@@ -2,17 +2,32 @@
 
 var _ = require('underscore')
 , GetOpt = require('node-getopt')
+, yaml = require('js-yaml')
+, fs = require('fs')
 , zaphod = require('../modules/zaphod')
 , getopt = new GetOpt([
 		['p', 'port='],
 		['u', 'url=']
 	])
 , opt = getopt.parse(process.argv)
-, defaults = {
+
+var loadConfig = function(path) {
+	try {
+  	return yaml.safeLoad(fs.readFileSync(path, 'utf8'));
+	} catch (e) {
+  	return {}
+	}
+}
+
+
+var defaults = {
 	url: 'ws://localhost',
 	port: 8080
 }
-, config = _.defaults(opt.options, defaults)
+
+var parsedConfig = loadConfig('$HOME/.zaphod.yaml')
+, yamlConfig = _.defaults(parsedConfig, defaults)
+, config = _.defaults(opt.options, yamlConfig)
 
 
 console.log('Starting bot with config: ')
