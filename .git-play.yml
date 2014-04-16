@@ -1,0 +1,8 @@
+app:
+  exec: node bin/zaphod.js url=$zaphod_host port=$zaphod_port
+
+setup:
+  - npm install
+
+teardown:
+  - echo "Not sure when this is echoed. What is teardown" >> zaphod.log
