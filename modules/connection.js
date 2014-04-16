@@ -27,7 +27,8 @@ exports.init = function(ws) {
         var key = data.toString();
         ws.send( JSON.stringify({
           type: 'reconnect',
-          key: key
+          key: key,
+          raw: true
         }));
       });
     },
