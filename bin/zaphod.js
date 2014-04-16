@@ -72,6 +72,19 @@ ws.on('message', function(data) {
 				payload: 'Please ignore Marvin. He is depressed.'
 			}));
 		}
+		else if (message.from == 'kengr') {
+			if (message.payload.indexOf('!piggy') == 0) {
+				var args = message.payload.split(' ')
+				if (args.length > 1) {
+					ws.send(JSON.stringify({
+						key: message.key,
+						type: 'msg',
+						to: message.from,
+						payload: message.from + ' want me to say: ' + args[1]
+					}))
+				}
+			}
+		}
 	}
 });
 
