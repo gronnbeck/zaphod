@@ -14,7 +14,8 @@
 	"dependencies": {
 		"ws": "0.4.31",
 		"underscore": "1.5.2",
-		"q": "2.0.0"
+		"q": "2.0.0",
+		"node-getopt": "latest"
 	},
 	"devDependencies": {
 		"supervisor": "latest"

@@ -2,13 +2,18 @@
 
 var WebSocket = require('ws')
 	, _ = require('underscore')
+	, GetOpt = require('node-getopt')
+	, getopt = new GetOpt([
+			['p', 'port='],
+			['u', 'url=']
+		])
 	, argv = process.argv
-	, parseConfig = require('../modules/parse-config')
+	, opt = getopt.parse(argv)
   , defaults = {
 		url: 'ws://localhost',
 		port: 8080
 	}
- , config = _.defaults(parseConfig.parse(argv), defaults)
+ , config = _.defaults(opt.options, defaults)
  , keyPath = 'zaphod.key'
 
 console.log('Starting bot with config: ')

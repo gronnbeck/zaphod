@@ -1,5 +1,5 @@
 app:
-  exec: node bin/zaphod.js url=$zaphod_host port=$zaphod_port
+  exec: node bin/zaphod.js --url $zaphod_host --port $zaphod_port
 
 setup:
   - npm install
