@@ -1,15 +1,15 @@
 {
-	"name": "Magrathea",
+	"name": "Zaphod",
 	"version": "0.0.0",
-	"description": "Simple IRC bot based on gronnbec/webirc",
-	"main": "bin/magrathea.js",
+	"description": "Simple IRC bot based on a WebSocket IRC Proxy",
+	"main": "bin/zaphod.js",
 	"author": "Ken Grønnbeck <kengroenn@gmail.com>",
 	"license": "MIT",
 	"scripts": {
 	},
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/gronnbeck/magrathea"
+		"url": "git://github.com/gronnbeck/zaphod"
 	},
 	"dependencies": {
 		"ws": "0.4.31",

@@ -16,13 +16,13 @@ var establishConnection = function(ws) {
 		type: 'connect',
 		connection: {
 			server: 'irc.freenode.net',
-			nick: 'nplol-magrathea',
+			nick: 'zaphod',
 			channels: ['#nplol', '#pekkabot']
 		}
 	}));
 }
 
-console.log('Starting magrathea bot with config: ')
+console.log('Starting bot with config: ')
 console.log(JSON.stringify(config, null, 4))
 
 var url = config.url + ':' + config.port
@@ -33,7 +33,7 @@ ws.on('open', function() {
 	console.log('[ws] ws discovered');
 
 	// look for saved connection key
-	fs.readFile('magrathea.key', function(err, data) {
+	fs.readFile('zaphod.key', function(err, data) {
 		// establish new connection if no key is found
 		if (err) {
 			establishConnection(ws);
