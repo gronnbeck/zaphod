@@ -10,6 +10,8 @@ var WebSocket = require('ws')
 		port: 8080
 	}
  , config = _.defaults(parseConfig.parse(argv), defaults)
+ , keyPath = 'zaphod.key'
+
 
 var establishConnection = function(ws) {
 	ws.send( JSON.stringify({
@@ -33,7 +35,7 @@ ws.on('open', function() {
 	console.log('[ws] ws discovered');
 
 	// look for saved connection key
-	fs.readFile('zaphod.key', function(err, data) {
+	fs.readFile(keyPath, function(err, data) {
 		// establish new connection if no key is found
 		if (err) {
 			establishConnection(ws);
@@ -58,7 +60,7 @@ ws.on('message', function(data) {
 	}
 
 	else if (message.type == 'connected') {
-		fs.writeFile('magrathea.key', message.key, function (err) {
+		fs.writeFile(keyPath, message.key, function (err) {
 			if (err)
 			console.log('Error occured when trying to save connection key: ' + err);
 		});
