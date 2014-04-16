@@ -1,27 +1,20 @@
 {
-	"name": "webirc",
+	"name": "Magrathea",
 	"version": "0.0.0",
-	"description": "Simple web-based irc-client",
-	"main": "app.js",
+	"description": "Simple IRC bot based on gronnbec/webirc",
+	"main": "bin/magrathea.js",
 	"author": "Ken Grønnbeck <kengroenn@gmail.com>",
 	"license": "MIT",
 	"scripts": {
 	},
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/gronnbeck/webirc"
+		"url": "git://github.com/gronnbeck/magrathea"
 	},
 	"dependencies": {
-		"irc": "0.3.6",
 		"ws": "0.4.31",
-		"node-uuid": "latest",
 		"underscore": "1.5.2",
-		"express": "3.4.x",
-		"nano": "latest",
-		"q": "2.0.0",
-		"coffee-script": "latest",
-		"express": "3.x",
-		"request": "latest"
+		"q": "2.0.0"
 	},
 	"devDependencies": {
 		"supervisor": "latest"
