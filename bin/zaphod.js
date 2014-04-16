@@ -18,12 +18,15 @@ var url = config.url + ':' + config.port
 console.log('Establishing connection to ' + url)
 var ws = new WebSocket(url);
 
-var Handlers = require('../modules/handlers'),
- handlers = Handlers.init(ws)
+var Handlers = require('../modules/handlers')
+ , Connection = require('../modules/connection')
+ , handlers = Handlers.init(ws)
+ , connection = Connection.init(ws)
+
 
 ws.on('open', function() {
 	console.log('[ws] ws discovered');
-	handlers.connect(keyPath)
+	connection.connect(keyPath)
 });
 
 ws.on('message', function(data) {
@@ -31,11 +34,11 @@ ws.on('message', function(data) {
 	var message = JSON.parse(data);
 
 	if (message.success == false && message.type == 'disconnected') {
-		handlers.reconnect()
+		connection.reconnect()
 	}
 
 	else if (message.type == 'connected') {
-		handlers.connected(keyPath, message.key)
+		connection.connected(keyPath, message.key)
 	}
 	else if (message.type == 'msg') {
 		handlers.userCommand(message)
