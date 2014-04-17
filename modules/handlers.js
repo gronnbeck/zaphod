@@ -1,6 +1,7 @@
 var _ = require('underscore')
+, scriptLoader = require('./scriptLoader')
 
-exports.init = function(ws) {
+exports.init = function(ws, scripts) {
 
   var filter = function(scripts, message) {
     return _.filter(scripts, function(script) {
@@ -17,40 +18,7 @@ exports.init = function(ws) {
       return result.type == 'void'
     })
   }
-  , scripts = [
-    {
-      trigger: function(message) {
-        return  message.from == 'nplol-bot-marvin'
-      },
-      execute: function(message) {
-        return {
-          key: message.key,
-          type: 'msg',
-          to: message.to,
-          payload: 'Please ignore Marvin. He is depressed.'
-        }
-      }
-    },
-    {
-      trigger: function(message) {
-        return message.from == 'kengr' &&
-          message.payload.indexOf('!nick') == 0
-      },
-      execute: function(message) {
-        var args = message.payload.split(' ')
-        if (args.length > 1) {
-          return {
-            key: message.key,
-            type: 'raw',
-            cmd: ['NICK', args[1]]
-          }
-        }
-        else return {
-          type: 'void'
-        }
-      }
-    }
-  ]
+  , scripts = scriptLoader.load()
   return {
     userCommand: function(message) {
       var hits = filter(scripts, message)
