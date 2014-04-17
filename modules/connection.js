@@ -2,6 +2,9 @@ var fs = require('fs')
 
 exports.init = function(ws, config) {
 
+  var connection = config.connection
+  , keyPath = config.keyPath
+
   var establishConnection = function() {
     ws.send( JSON.stringify({
       type: 'connect',
@@ -12,7 +15,7 @@ exports.init = function(ws, config) {
 
   return {
     connect: function() {
-      fs.readFile(config.keyPath, function(err, data) {
+      fs.readFile(keyPath, function(err, data) {
         // establish new connection if no key is found
         if (err) {
           establishConnection();
@@ -28,8 +31,8 @@ exports.init = function(ws, config) {
         }));
       });
     },
-    connected: function(savePath, key) {
-      fs.writeFile(savePath, key, function (err) {
+    connected: function(key) {
+      fs.writeFile(keyPath, key, function (err) {
         if (err)
           console.log('Error occured when trying to save connection key: ' + err);
       });

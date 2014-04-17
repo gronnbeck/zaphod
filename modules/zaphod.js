@@ -22,7 +22,7 @@ exports.connect = function(url, ircConfig) {
     }
 
     else if (message.type == 'connected') {
-      connection.connected(ircConfig.keyPath, message.key)
+      connection.connected(message.key)
     }
     else if (message.type == 'msg') {
       handlers.userCommand(message)
