@@ -19,7 +19,6 @@ var loadConfig = function(path) {
 	}
 }
 
-
 var defaults = {
 	url: 'ws://localhost',
 	port: 8080
@@ -34,6 +33,14 @@ console.log('Starting bot with config: ')
 console.log(JSON.stringify(config, null, 4))
 
 var url = config.url + ':' + config.port
-, keyPath = 'zaphod.key'
+, ircConfig = {
+	keyPath: 'zaphod.key',
+	connection: {
+		server: 'irc.freenode.net',
+		nick: 'nplol-zaphod',
+		channels: ['#pekkabot']
+	},
+	raw: true
+}
 
-zaphod.connect(url, keyPath)
+zaphod.connect(url, ircConfig)

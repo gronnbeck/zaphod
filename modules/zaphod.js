@@ -2,21 +2,12 @@ var WebSocket = require('ws')
 , Handlers = require('../modules/handlers')
 , Connection = require('../modules/connection')
 
-exports.connect = function(url, keyPath) {
+exports.connect = function(url, ircConfig) {
 
   console.log('Establishing connection to ' + url)
   var ws = new WebSocket(url)
   , handlers = Handlers.init(ws)
-  , config = {
-    keyPath: keyPath,
-    connection: {
-      server: 'irc.freenode.net',
-      nick: 'nplol-zaphod',
-      channels: ['#pekkabot']
-    },
-    raw: true
-  }
-  , connection = Connection.init(ws, config)
+  , connection = Connection.init(ws, ircConfig)
 
   ws.on('open', function() {
     console.log('[ws] ws discovered');
@@ -31,7 +22,7 @@ exports.connect = function(url, keyPath) {
     }
 
     else if (message.type == 'connected') {
-      connection.connected(keyPath, message.key)
+      connection.connected(ircConfig.keyPath, message.key)
     }
     else if (message.type == 'msg') {
       handlers.userCommand(message)
