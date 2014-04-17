@@ -1,8 +1,6 @@
 var _ = require('underscore')
-, scriptLoader = require('./scriptLoader')
 
 exports.init = function(ws, scripts) {
-  var scripts = scriptLoader.load()
   return {
     userCommand: function(message) {
       _.each(scripts, function(script) {
@@ -18,7 +16,7 @@ exports.init = function(ws, scripts) {
             ws.send(JSON.stringify(res))
           }
         })
-        
+
       })
 
     }

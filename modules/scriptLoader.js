@@ -6,22 +6,28 @@ var isJavascript = function(file) {
 }
 
 var scriptFiles = function (dir) {
-  try {
-    return _.filter(fs.readdirSync(dir), function(file) {
+  var deferred = Q.defer()
+  fs.readdir(dir, function(err, files) {
+    if (err) {
+      deferred.reject(err)
+    }
+
+    var filtered = _.filter(files, function(file) {
       return isJavascript(file)
     })
-  } catch (e) {
-    console.log('Could not find directory: ' + dir)
-    return []
-  }
+    deferred.resolve(filtered)
+  })
+  return deferred.promise
 }
 
 var loadLocalScripts = function() {
   var dir = 'scripts'
-  var files = scriptFiles(dir)
-  return _.map(files, function(file) {
-      return require('../' + dir + '/' + file)
+  return scriptFiles(dir).then(function(files) {
+      return _.map(files, function(file) {
+          return require('../' + dir + '/' + file)
+      })
   })
+
 }
 
 exports.load = function() {

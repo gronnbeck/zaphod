@@ -1,12 +1,12 @@
 var WebSocket = require('ws')
 , Handlers = require('../modules/handlers')
 , Connection = require('../modules/connection')
+, scriptLoader = require('./scriptLoader')
 
-exports.connect = function(url, ircConfig) {
-
+var connect = function(url, ircConfig, scripts) {
   console.log('Establishing connection to ' + url)
   var ws = new WebSocket(url)
-  , handlers = Handlers.init(ws)
+  , handlers = Handlers.init(ws, scripts)
   , connection = Connection.init(ws, ircConfig)
 
   ws.on('open', function() {
@@ -33,5 +33,12 @@ exports.connect = function(url, ircConfig) {
   ws.on('close', function() {
     console.log('ws closed. Handle reconnection.');
   });
+
+}
+
+exports.connect = function(url, ircConfig) {
+  scriptLoader.load().then(function(scripts) {
+      connect(url, ircConfig, scripts)
+  })
 
 }
