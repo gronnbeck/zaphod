@@ -1,25 +1,21 @@
 var fs = require('fs')
 
-exports.init = function(ws) {
+exports.init = function(ws, config) {
 
-  var establishConnection = function(ws) {
+  var establishConnection = function() {
     ws.send( JSON.stringify({
       type: 'connect',
-      connection: {
-        server: 'irc.freenode.net',
-        nick: 'nplol-zaphod',
-        channels: ['#pekkabot']
-      },
-      raw: true
-    }));
+      connection: config.connection,
+      raw: config.raw
+    }) );
   }
 
   return {
-    connect: function(keyPath) {
-      fs.readFile(keyPath, function(err, data) {
+    connect: function() {
+      fs.readFile(config.keyPath, function(err, data) {
         // establish new connection if no key is found
         if (err) {
-          establishConnection(ws);
+          establishConnection();
           return;
         }
 
@@ -28,7 +24,7 @@ exports.init = function(ws) {
         ws.send( JSON.stringify({
           type: 'reconnect',
           key: key,
-          raw: true
+          raw: config.raw
         }));
       });
     },
@@ -39,7 +35,7 @@ exports.init = function(ws) {
       });
     },
     reconnect: function() {
-      establishConnection(ws);
+      establishConnection();
     }
   }
 }

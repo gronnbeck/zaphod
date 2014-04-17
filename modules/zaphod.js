@@ -5,14 +5,22 @@ var WebSocket = require('ws')
 exports.connect = function(url, keyPath) {
 
   console.log('Establishing connection to ' + url)
-  var ws = new WebSocket(url);
-
-  var handlers = Handlers.init(ws)
-  , connection = Connection.init(ws)
+  var ws = new WebSocket(url)
+  , handlers = Handlers.init(ws)
+  , config = {
+    keyPath: keyPath,
+    connection: {
+      server: 'irc.freenode.net',
+      nick: 'nplol-zaphod',
+      channels: ['#pekkabot']
+    },
+    raw: true
+  }
+  , connection = Connection.init(ws, config)
 
   ws.on('open', function() {
     console.log('[ws] ws discovered');
-    connection.connect(keyPath)
+    connection.connect()
   });
 
   ws.on('message', function(data) {
