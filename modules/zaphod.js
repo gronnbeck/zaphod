@@ -1,12 +1,11 @@
 var WebSocket = require('ws')
 , Handlers = require('../modules/handlers')
 , Connection = require('../modules/connection')
-, scriptLoader = require('./scriptLoader')
 
-var connect = function(url, ircConfig, scripts) {
+var connect = function(url, ircConfig) {
   console.log('Establishing connection to ' + url)
   var ws = new WebSocket(url)
-  , handlers = Handlers.init(ws, scripts)
+  , handlers = Handlers.init(ws)
   , connection = Connection.init(ws, ircConfig)
 
   ws.on('open', function() {
@@ -37,8 +36,5 @@ var connect = function(url, ircConfig, scripts) {
 }
 
 exports.connect = function(url, ircConfig) {
-  scriptLoader.load().then(function(scripts) {
-      connect(url, ircConfig, scripts)
-  })
-
+    connect(url, ircConfig)
 }

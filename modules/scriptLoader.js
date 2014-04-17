@@ -1,5 +1,6 @@
 var fs = require('fs')
 , _ = require('underscore')
+, Q = require('q')
 
 var isJavascript = function(file) {
   return file.indexOf('.js') != -1
