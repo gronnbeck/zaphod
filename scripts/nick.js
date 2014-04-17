@@ -1,6 +1,7 @@
 var async = require('../modules/FakeAsync')
 
 module.exports = {
+  id: 'nick',
   trigger: function(message) {
     return async(message.from == 'kengr' &&
       message.payload.indexOf('!nick') == 0)

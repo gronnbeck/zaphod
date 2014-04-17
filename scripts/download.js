@@ -26,6 +26,7 @@ var download = function(url) {
 }
 
 module.exports = {
+  id: 'download script',
   trigger: function(message) {
     return async(message.payload.indexOf('!download') == 0)
   },
