@@ -31,6 +31,29 @@ var loadLocalScripts = function() {
 
 }
 
+exports.loadConfig = function(filename) {
+  var deferred = Q.defer()
+  fs.exists(filename, function(exists) {
+    if (exists) {
+      fs.readFile(filename, function(err, data) {
+          deferred.resolve(JSON.parse(data))
+      })
+    }
+    else {
+      deferred.resolve({})
+    }
+  })
+  return deferred.promise
+}
+
+exports.writeConfig = function(filename, config, success) {
+  var data = JSON.stringify(config)
+  fs.writeFile(filename, data, function(err) {
+    success()
+  })
+}
+
+
 exports.load = function() {
   return loadLocalScripts()
 }
