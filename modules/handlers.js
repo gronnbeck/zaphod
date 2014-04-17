@@ -2,31 +2,23 @@ var _ = require('underscore')
 , scriptLoader = require('./scriptLoader')
 
 exports.init = function(ws, scripts) {
-
-  var filter = function(scripts, message) {
-    return _.filter(scripts, function(script) {
-      return script.trigger(message)
-    })
-  }
-  , execute = function(scripts, message) {
-    return _.map(scripts, function(script) {
-      return script.execute(message)
-    })
-  }
-  , rejectVoid = function(results) {
-    return _.reject(results, function(result) {
-      return result.type == 'void'
-    })
-  }
-  , scripts = scriptLoader.load()
+  var scripts = scriptLoader.load()
   return {
     userCommand: function(message) {
-      var hits = filter(scripts, message)
-      , results = execute(hits, message)
-      , send = rejectVoid(results)
+      _.each(scripts, function(script) {
+        return script.trigger(message)
 
-      _.each(send, function(msg) {
-        ws.send(JSON.stringify(msg))
+        .then(function(bool) {
+          if (!bool) return { type: 'void' }
+          return script.execute(message)
+        })
+
+        .then(function(res) {
+          if (res.type != 'void') {
+            ws.send(JSON.stringify(res))
+          }
+        })
+        
       })
 
     }
