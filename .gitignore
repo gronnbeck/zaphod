@@ -2,3 +2,4 @@ node_modules/*
 *.key
 **/*.key
 scripts/dl/*
+scripts.config.yml
